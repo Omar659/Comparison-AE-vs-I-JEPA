@@ -1,0 +1,11 @@
+{
+  "run_name": "20260220_183414",
+  "total_epochs": 100,
+  "best_knn_acc": 0.439,
+  "best_epoch": 90,
+  "final_train_loss": 0.063562,
+  "final_val_loss": 0.065216,
+  "final_knn_acc": 0.4354,
+  "linear_probe_top1": 0.4886,
+  "linear_probe_top5": 0.788
+}

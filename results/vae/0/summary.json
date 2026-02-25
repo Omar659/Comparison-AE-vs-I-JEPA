@@ -1,0 +1,8 @@
+{
+  "run_name": "vae_20260223_175050",
+  "total_epochs": 100,
+  "best_psnr": 17.573068878785023,
+  "best_epoch": 93,
+  "final_test_mse": 0.437386,
+  "final_test_psnr": 17.57
+}
