@@ -143,13 +143,25 @@ def save_results(results: list[dict] | dict, path: str) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w') as f:
         json.dump(results, f, indent=2)
-        
-def get_kl_weight(current_epoch: int, warmup_epochs: int, max_weight: float) -> float:
+
+
+def get_kl_weight(
+    epoch:         int,
+    warmup_epochs: int,
+    kld_weight:    float,
+) -> float:
     """
-    Calcola il peso dinamico per la KL Divergence (KL Annealing).
-    Aumenta linearmente da 0 fino a max_weight durante le prime 'warmup_epochs'.
+    KL annealing lineare: parte da 0 e raggiunge kld_weight a fine warmup.
+    Evita il posterior collapse nelle prime epoche dove la recon loss domina.
+
+    Args:
+        epoch         : epoca corrente (0-indexed)
+        warmup_epochs : epoche per raggiungere il peso pieno
+        kld_weight    : peso target della KL
+
+    Returns:
+        peso KL corrente
     """
-    if current_epoch >= warmup_epochs:
-        return max_weight
-    
-    return max_weight * (current_epoch / warmup_epochs)
+    if warmup_epochs <= 0:
+        return kld_weight
+    return kld_weight * min(1.0, epoch / warmup_epochs)
